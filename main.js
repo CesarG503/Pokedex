@@ -92,3 +92,16 @@ function RenderizarElementos() {
         tbody.innerHTML += row;
     });
 }
+
+//procedimiento de mostrar los pokemones
+
+let url = 'https://pokeapi.co/api/v2/pokemon';
+
+function MostrarPokemones() {
+    fetch(url) // varirble url de la api
+        .then(response => response.json())
+        .then(data => {
+            pokemons = data.results;
+            RenderizarElementos();
+        });
+}
