@@ -93,17 +93,43 @@ function RenderizarElementos() {
     });
 }
 
+
+let entrenadores = [];
+
+function RenderizarEntrenadores() {
+    const tbody = document.getElementById('entrenadorTableBody');
+    tbody.innerHTML = '';
+    entrenadores.forEach((entrenador, index) => {
+        const row = `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${entrenador.nombre}</td>
+                <td>${entrenador.correo}</td>
+                <td>${entrenador.password}</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="EditarEntrenadorModal(${index})">Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="EliminarEntrenador(${index})">Eliminar</button>
+                </td>
+            </tr>
+        `;
+        tbody.innerHTML += row;
+    });
+}
+
+
 //procedimiento de mostrar los pokemones
 
 let url = 'https://pokeapi.co/api/v2/pokemon';
 
-let urlEntrenador = 'http://localhost:3000/api/pokemon';
+let urlEntrenador = 'http://localhost:3000/api/entrenador';
 
 function MostrarEntrenadores() {
-    fetch(urlEntrenador) // varirble url de la api
+    fetch(urlEntrenador)
         .then(response => response.json())
         .then(data => {
-            pokemons = data.results;
-            RenderizarElementos();
+            entrenadores = data;
+            RenderizarEntrenadores();
         });
 }
+
+document.addEventListener('DOMContentLoaded', MostrarEntrenadores); 

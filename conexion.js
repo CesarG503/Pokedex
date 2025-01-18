@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 //CRUD DE LAS TABLAS 
 
 
-app.get('/api/pokemon', async (req, res) => {
+app.get('/api/entrenador', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM entrenadores');
         res.send(result.rows);
@@ -42,7 +42,7 @@ app.get('/api/pokemon', async (req, res) => {
 });
 
 // Mostrar un solo usuario en la tabla entrenadores 
-app.get('/api/pokemon/:id', async (req, res) => {
+app.get('/api/entrenador/:id', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM entrenadores WHERE id = $1', [req.params.id]);
         res.send(result.rows);
@@ -52,7 +52,7 @@ app.get('/api/pokemon/:id', async (req, res) => {
 });
 
 // Crear un usuario en la tabla entrenadores
-app.post('/api/pokemon', async (req, res) => {
+app.post('/api/entrenador', async (req, res) => {
     const { nombre, correo, password } = req.body;
     try {
         const result = await pool.query(
@@ -66,7 +66,7 @@ app.post('/api/pokemon', async (req, res) => {
 });
 
 // Editar entrenador
-app.put('/api/pokemon/:id', async (req, res) => {
+app.put('/api/entrenador/:id', async (req, res) => {
     const { nombre, correo, password } = req.body;
     try {
         const result = await pool.query(
@@ -80,7 +80,7 @@ app.put('/api/pokemon/:id', async (req, res) => {
 });
 
 // Eliminar Entrenador
-app.delete('/api/pokemon/:id', async (req, res) => {
+app.delete('/api/entrenador/:id', async (req, res) => {
     try {
         const result = await pool.query('DELETE FROM entrenadores WHERE id = $1 RETURNING *', [req.params.id]);
         res.send(result.rows[0]);
@@ -88,8 +88,6 @@ app.delete('/api/pokemon/:id', async (req, res) => {
         throw err;
     }
 });
-
-
 
 
 const puerto = process.env.PUERTO || 3000;
