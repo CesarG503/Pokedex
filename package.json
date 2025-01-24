@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/CesarG503/Pokedex#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.13.1"
   }
 }

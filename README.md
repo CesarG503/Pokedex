@@ -15,27 +15,40 @@
 npm init -y
 ```
 
-### Instalar **Express**
+### Instalar **Express**, **pg**, **bcrypt**, **CORS**, **jsonwebtoken** y **body-parser**
 ```bash
-npm install express --save
+npm install express pg cors bcrypt jsonwebtoken body-parser
 ```
 
-### Instalar **pg** (librería para PostgreSQL)
-```bash
-npm install pg
-```
-
-### Instalar **Express**, **pg** y **CORS** juntos
-```bash
-npm install express pg cors
-```
-
-### Probar la API ejecutando `conexion.js`
+### Probar la API ejecutando `conexion.js` puerto: 3000
 ```bash
 node conexion.js
 ```
 
 ### Descargar todas las dependencias del proyecto
-Si ya tienes un archivo `package.json`, usa:
+En la ruta inicial donde esta el archivo `package.json`, usa:
 ```bash
 npm install
+```
+
+
+# Uso de las dependencias
+
+- **express**: Framework para crear aplicaciones web y APIs.
+- **pg**: Cliente para interactuar con PostgreSQL.
+- **cors**: Middleware para habilitar solicitudes desde otros dominios.
+- **bcrypt**: Para encriptar contraseñas.
+- **jsonwebtoken (JWT)**: Para manejar la autenticación basada en tokens.
+- **body-parser**: Middleware para procesar datos JSON en solicitudes POST.
+
+
+# Estructura y funcionamiento Actual ()
+
+- **conexion.js**: Usar ```node conexion.js``` en la terminal para arrancar el proyecto 
+- **db.js**: <span style="color:red;">EDITA ESTE ARCHIVO</span> (Archivo de configuracion del servidor)
+
+- **js / crud**: Colocar aqui todos los modelos de las tablas para manejar las operaciones CRUD
+
+- **main.js**: logica principal de la aplicacion, es el unico archivo que interactura con las estructuras html
+
+- **server.js**: configura y arranca el servidor Express y protege las rutas por ahora
