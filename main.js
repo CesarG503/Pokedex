@@ -93,7 +93,6 @@ function RenderizarElementos() {
     });
 }
 
-
 let entrenadores = [];
 
 function RenderizarEntrenadores() {
@@ -114,22 +113,108 @@ function RenderizarEntrenadores() {
         `;
         tbody.innerHTML += row;
     });
+    console.log('Entrenadores renderizados:', entrenadores);
 }
-
-
-//procedimiento de mostrar los pokemones
-
-let url = 'https://pokeapi.co/api/v2/pokemon';
 
 let urlEntrenador = 'http://localhost:3000/api/entrenador';
 
 function MostrarEntrenadores() {
-    fetch(urlEntrenador)
-        .then(response => response.json())
-        .then(data => {
-            entrenadores = data;
-            RenderizarEntrenadores();
-        });
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
+    fetch(urlEntrenador, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => {
+        console.log('Response status:', response.status);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data received:', data);
+        entrenadores = data;
+        RenderizarEntrenadores();
+    })
+    .catch(error => {
+        console.error('Error fetching entrenadores:', error);
+    });
 }
 
-document.addEventListener('DOMContentLoaded', MostrarEntrenadores); 
+function MostrarUsuario(userId) {
+    const token = localStorage.getItem('token');
+    fetch(`http://localhost:3000/api/entrenador/${userId}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('username').textContent = data[0].nombre;
+    })
+    .catch(error => {
+        console.error('Error fetching usuario:', error);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      MostrarUsuario(userId);
+    }
+  });
+
+document.addEventListener('DOMContentLoaded', MostrarEntrenadores);
+
+
+function AgregarEntrenadorModal() {
+    Swal.fire({
+        title: 'Agregar Entrenador',
+        html: `
+            <input type="text" id="entrenadorNombre" class="swal2-input" placeholder="Nombre">
+            <input type="email" id="entrenadorCorreo" class="swal2-input" placeholder="Correo">
+            <input type="password" id="entrenadorPassword" class="swal2-input" placeholder="Contraseña">
+        `,
+        confirmButtonText: 'Agregar',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        preConfirm: () => {
+            const nombre = document.getElementById('entrenadorNombre').value;
+            const correo = document.getElementById('entrenadorCorreo').value;
+            const password = document.getElementById('entrenadorPassword').value;
+            if (!nombre || !correo || !password) {
+                Swal.showValidationMessage('Por favor, completa todos los campos');
+                return false;
+            }
+            return { nombre, correo, password };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const token = localStorage.getItem('token');
+            fetch('http://localhost:3000/api/entrenador', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(result.value)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    Swal.fire('Error', data.error, 'error');
+                } else {
+                    entrenadores.push(data);
+                    RenderizarEntrenadores();
+                    Swal.fire('Éxito', 'Entrenador agregado correctamente', 'success');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Error', 'No se pudo agregar el entrenador', 'error');
+            });
+        }
+    });
+}
+
