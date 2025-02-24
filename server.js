@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const path = require('path'); // Importar path para manejar rutas de archivos
 const pool = require('./db'); // Importar la conexión a la base de datos
 const entrenadoresRouter = require('./js/crud/Entrenadores'); // Importar las rutas de Entrenadores.js
 
@@ -11,6 +12,9 @@ const PORT = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Configurar el servidor para servir archivos estáticos desde el directorio public
+app.use(express.static(path.join(__dirname)));
 
 // Conexión a la base de datos
 pool.connect((err) => {
@@ -63,9 +67,14 @@ app.post('/login', async (req, res) => {
   }
 });
 
+// Configurar la ruta raíz para servir login.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
 //Colocar las rutas protegidas debajo de esta línea
 app.get('/index.html', authenticateToken, (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 //... y arriba de esta línea (crear un archivo de rutas protegidas)
