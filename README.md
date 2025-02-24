@@ -44,7 +44,8 @@ npm install
 
 # Estructura y funcionamiento Actual ()
 
-- **conexion.js**: Usar ```node conexion.js``` en la terminal para arrancar el proyecto 
+- **conexion.js**: Usar ```node server.js``` en la terminal para arrancar el proyecto 
+- **npm run dev**: Usar el Script de node para ejecutar el servidor
 - **db.js**: <span style="color:red;">EDITA ESTE ARCHIVO</span> (Archivo de configuracion del servidor)
 
 - **js / crud**: Colocar aqui todos los modelos de las tablas para manejar las operaciones CRUD
