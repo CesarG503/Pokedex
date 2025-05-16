@@ -28,12 +28,18 @@ function clearFields(form) {
   });
 }
 
+// Detectar si estamos en local o en producción
+const API_BASE_URL =
+  window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:3000'
+    : 'https://bingo-ivxo.onrender.com';
+
 document.getElementById('sign-in-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const email = e.target.email.value;
   const password = e.target.password.value;
 
-  const response = await fetch('http://localhost:3000/login', {
+  const response = await fetch(`${API_BASE_URL}/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -63,7 +69,7 @@ document.getElementById('sign-up-form').addEventListener('submit', async (e) => 
   const email = e.target.email.value;
   const password = e.target.password.value;
 
-  const response = await fetch('http://localhost:3000/register', {
+  const response = await fetch(`${API_BASE_URL}/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
