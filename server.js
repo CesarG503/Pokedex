@@ -7,8 +7,11 @@ const path = require('path'); // Importar path para manejar rutas de archivos
 const pool = require('./db'); // Importar la conexión a la base de datos
 const entrenadoresRouter = require('./js/crud/Entrenadores'); // Importar las rutas de Entrenadores.js
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 const app = express();
-const PORT = 3000;
+const PORT =  process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
