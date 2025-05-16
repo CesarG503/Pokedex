@@ -12,7 +12,9 @@ const pool = new Pool({
   //database: 'PokemonDB',
   //port: 5432
   connectionString: process.env.DATA_BASE_URL,
-  ssl: true
+  ssl: {
+    rejectUnauthorized: false, // << ESTA LÍNEA SOLUCIONA EL ERROR
+  },
 });
 
 pool.connect((err) => {
