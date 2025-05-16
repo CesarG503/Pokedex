@@ -115,8 +115,13 @@ function RenderizarEntrenadores() {
     });
     console.log('Entrenadores renderizados:', entrenadores);
 }
+// Detectar si estamos en local o en producción
+const API_BASE_URL =
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:3000'
+        : 'https://bingo-ivxo.onrender.com';
 
-let urlEntrenador = 'http://localhost:3000/api/entrenador';
+let urlEntrenador = `${API_BASE_URL}/api/entrenador`;
 
 function MostrarEntrenadores() {
     const token = localStorage.getItem('token');
