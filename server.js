@@ -13,7 +13,13 @@ dotenv.config();
 const app = express();
 const PORT =  process.env.PORT || 3000;
 
-app.use(cors());
+// Configurar CORS para aceptar cualquier origen (útil para pruebas móviles)
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use(bodyParser.json());
 
 // Configurar el servidor para servir archivos estáticos desde el directorio public
