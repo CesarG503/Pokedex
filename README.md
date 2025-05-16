@@ -20,9 +20,9 @@ npm init -y
 npm install express pg cors bcrypt jsonwebtoken body-parser
 ```
 
-### Probar la API ejecutando `conexion.js` puerto: 3000
+### Probar la API ejecutando puerto: 3000
 ```bash
-node conexion.js
+npm run dev
 ```
 
 ### Descargar todas las dependencias del proyecto
